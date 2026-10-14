@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +34,8 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public List<Ticket> GetAll() {
-        return List.of();
+        return StreamSupport.stream(ticketRepository.findAll().spliterator(), false)
+                .toList();
     }
 
     @Override

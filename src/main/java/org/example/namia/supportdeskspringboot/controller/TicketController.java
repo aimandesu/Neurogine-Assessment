@@ -2,15 +2,18 @@ package org.example.namia.supportdeskspringboot.controller;
 
 import jakarta.validation.Valid;
 import org.example.namia.supportdeskspringboot.exception.ResourceNotFoundException;
-import org.example.namia.supportdeskspringboot.input.UpdateTicketStatusRequest;
+import org.example.namia.supportdeskspringboot.model.dto.request.CreateTicketRequest;
+import org.example.namia.supportdeskspringboot.model.dto.request.UpdateTicketStatusRequest;
 import org.example.namia.supportdeskspringboot.model.entity.Agent;
 import org.example.namia.supportdeskspringboot.model.entity.Ticket;
+import org.example.namia.supportdeskspringboot.model.enums.TStatus;
 import org.example.namia.supportdeskspringboot.model.shared.Success;
 import org.example.namia.supportdeskspringboot.service.AgentService;
 import org.example.namia.supportdeskspringboot.service.TicketService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,8 +31,16 @@ public class TicketController {
     }
 
     @PostMapping()
-    public ResponseEntity<Success<Ticket>> createTicket(@RequestBody final Ticket ticket)
+    public ResponseEntity<Success<Ticket>> createTicket(@RequestBody final CreateTicketRequest request)
     {
+        Ticket ticket = new Ticket();
+        ticket.setTitle(request.title());
+        ticket.setDescription(request.description());
+        ticket.setCustomerName(request.customerName());
+        ticket.setCustomerEmail(request.customerEmail());
+        ticket.setPriority(request.priority());
+        ticket.setTicketStatus(TStatus.New);
+
         Ticket createdTicket = ticketService.Create(ticket);
 
         return ResponseEntity.ok(new Success<>(
@@ -37,6 +48,17 @@ public class TicketController {
                 "Ticket created")
         );
 
+    }
+
+    @GetMapping()
+    public ResponseEntity<Success<List<Ticket>>> getAllTicket()
+    {
+        List<Ticket> tickets = ticketService.GetAll();
+
+        return ResponseEntity.ok(new Success<>(
+                tickets,
+                "got all tickets"
+        ));
     }
 
     @PutMapping("/{id}/assigner")

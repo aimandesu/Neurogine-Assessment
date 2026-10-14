@@ -1,10 +1,7 @@
 package org.example.namia.supportdeskspringboot.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 import org.example.namia.supportdeskspringboot.model.enums.Priority;
 import org.example.namia.supportdeskspringboot.model.enums.TStatus;
 
@@ -15,6 +12,7 @@ import java.util.UUID;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "Ticket")
 public class Ticket {
 
