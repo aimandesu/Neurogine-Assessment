@@ -18,10 +18,20 @@ public class Agent {
     public UUID Id;
 
     public String FullName;
+
+    @Enumerated(EnumType.STRING)
     public Department Department;
+
+    @Column(unique = true, nullable = false)
+    public String Email;
+
     public boolean Active = true;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "TickedId")
-    public List<Ticket> tickets = new ArrayList<>();; //what's difference using public and private here
+    @JoinColumn(name = "AssignedAgent")
+    public List<Ticket> tickets = new ArrayList<>(); //what's difference using public and private here
+
+    @OneToOne
+    @JoinColumn(name = "UserId")
+    private User User;
 }
