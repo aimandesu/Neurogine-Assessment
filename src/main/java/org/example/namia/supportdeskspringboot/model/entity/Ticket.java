@@ -25,7 +25,14 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.UUID)
     public UUID Id;
 
-    public String Reference;
+    @Column(name = "TicketSeq", insertable = false, updatable = false,
+            columnDefinition = "bigint generated always as identity")
+    @org.hibernate.annotations.Generated
+    private Long TicketSeq;
+
+    @Column(unique = true)
+    private String Reference;
+
     public String Title;
     public String Description;
     public String CustomerName;
@@ -42,8 +49,17 @@ public class Ticket {
     @Setter(AccessLevel.PRIVATE)
     private OffsetDateTime DueDate;
 
+    private Long ReopenCount;
+
+    public String ResolutionSummary;
+    public String Version;
+    public Boolean IsDeleted;
+
     @OneToMany
     private List<Comment> Comments = new ArrayList<>();
+
+    @OneToMany
+    private List<Attachment> Attachments = new ArrayList<>();
 
     public boolean isReadOnly() {
         return this.TicketStatus == TStatus.Closed;
@@ -66,6 +82,19 @@ public class Ticket {
         this.recalculateOverdueDate();
     }
 
+    @PostPersist
+    public void setReference()
+    {
+        this.Reference = String.format(
+                "TCK-%d-%04d",
+                this.CreatedDate.getYear(),
+                this.TicketSeq);
+    }
+
+    public void setReopenCount(Integer ReopenCount)
+    {
+        this.ReopenCount = ReopenCount + 1L;
+    }
 
 
     private void recalculateOverdueDate()

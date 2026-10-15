@@ -1,5 +1,6 @@
 package org.example.namia.supportdeskspringboot.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.namia.supportdeskspringboot.exception.ResourceNotFoundException;
 import org.example.namia.supportdeskspringboot.model.entity.Agent;
@@ -20,11 +21,14 @@ public class TicketServiceImpl implements TicketService {
     private final TicketRepository ticketRepository;
 
     @Override
+    @Transactional
     public Ticket Create(Ticket entity) {
-
         entity.setTicketStatus(TStatus.New);
 
-        return ticketRepository.save(entity);
+        Ticket saved = ticketRepository.saveAndFlush(entity); // INSERT now, counter read back
+        saved.setReference();
+
+        return ticketRepository.save(saved);                  // explicit UPDATE of Reference
     }
 
     @Override
