@@ -2,6 +2,7 @@ package org.example.namia.supportdeskspringboot.exception;
 
 import org.example.namia.supportdeskspringboot.model.shared.Failure;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -29,5 +30,11 @@ public class GlobalExceptionHandler {
                 "State Conflict",
                 null
         );
+    }
+
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    public ResponseEntity<String> handleEmailConflict(EmailAlreadyExistsException ex) {
+        // HTTP 409 Conflict is the standard status for duplicate resources
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 }

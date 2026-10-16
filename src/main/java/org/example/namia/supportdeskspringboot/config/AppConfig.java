@@ -1,6 +1,7 @@
 package org.example.namia.supportdeskspringboot.config;
 
 import org.example.namia.supportdeskspringboot.repository.UserRepository;
+import org.example.namia.supportdeskspringboot.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,11 +31,11 @@ public class AppConfig {
 
     @Bean
     public UserDetailsService userDetailsService(
-            UserRepository userRepository
+            UserService userService
     ) {
         return email -> {
             // 1. Fetch your custom database User entity
-            org.example.namia.supportdeskspringboot.model.entity.User dbUser = userRepository.findByEmail(email)
+            org.example.namia.supportdeskspringboot.model.entity.User dbUser = userService.findByEmail(email)
                     .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
             // 2. Map it to Spring Security's internal User object
