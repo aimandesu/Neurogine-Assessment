@@ -14,18 +14,18 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    public UUID Id;
+    public UUID id;
 
     @Column(unique = true, nullable = false)
-    public String Email;
+    public String email;
 
     @Column(nullable = false)
     private String passwordHash;
 
     @Enumerated(EnumType.STRING)
-    public Roles Role;
+    public Roles role;
 
-    public Boolean Enabled = true;
-    public OffsetDateTime CreatedDate = OffsetDateTime.now();
+    public Boolean enabled = true;
+    public OffsetDateTime createdDate = OffsetDateTime.now();
 
 }
