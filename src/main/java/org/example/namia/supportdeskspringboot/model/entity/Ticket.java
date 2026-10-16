@@ -78,6 +78,12 @@ public class Ticket {
 
     public void setPriority(Priority priority)
     {
+        if (this.TicketStatus == TStatus.Resolved || this.TicketStatus == TStatus.Closed)
+        {
+            throw new IllegalStateException("Can't set priority when Ticket is Resolved" +
+                    "Or Ticket is Closed");
+        }
+
         this.Priority = priority;
         this.recalculateOverdueDate();
     }

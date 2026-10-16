@@ -33,10 +33,12 @@ public class TicketServiceImpl implements TicketService {
     public Ticket Create(Ticket entity) {
         entity.setTicketStatus(TStatus.New);
 
-        Ticket saved = ticketRepository.saveAndFlush(entity); // INSERT now, counter read back
-        saved.setReference();
+        Ticket ticket = ticketRepository.saveAndFlush(entity); // INSERT now, counter read back
+        ticket.setReference();
 
-        return ticketRepository.save(saved);                  // explicit UPDATE of Reference
+        UpdateTicketHistory(ticket, Action.Created);
+
+        return ticketRepository.save(ticket);                  // explicit UPDATE of Reference
     }
 
     @Override
@@ -52,17 +54,24 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public Ticket Update(Ticket entity) {
-        Ticket existingTicket = Get(entity.Id)
+
+        UpdateTicketHistory(entity, Action.Updated);
+
+        return ticketRepository.save(entity);
+    }
+
+    @Override
+    public void Delete(UUID Id) {
+        Ticket ticket = Get(Id)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Ticket.NOT_FOUND",
                         "Ticket not found")
                 );
 
-        return ticketRepository.save(existingTicket);
-    }
+        ticket.setIsDeleted(true);
 
-    @Override
-    public void Delete(UUID Id) {
+        Update(ticket);
+        UpdateTicketHistory(ticket, Action.Deleted);
 
     }
 
@@ -80,13 +89,33 @@ public class TicketServiceImpl implements TicketService {
         searchedTicket.AssignAgent(Agent);
 
         Update(searchedTicket);
+        UpdateTicketHistory(searchedTicket, Action.Assigned);
 
         return Optional.of(searchedTicket);
     }
 
     @Override
     public Optional<Ticket> UnassignAgent(UUID TicketId, Agent Agent) {
-        return Optional.empty();
+
+        Ticket ticket = Get(TicketId).orElseThrow(
+                () -> new ResourceNotFoundException(
+                        "Ticket.NOT_FOUND",
+                        "Ticket not found"
+                )
+        );
+
+        if (ticket.getTicketStatus() == TStatus.InProgress)
+        {
+            throw new IllegalStateException("Ticket is in progress. Please assign ticket to other agent instead");
+        }
+
+        ticket.UnassignAgent(Agent);
+
+        Update(ticket);
+        UpdateTicketHistory(ticket, Action.Unassigned);
+
+        return Optional.of(ticket);
+
     }
 
     @Override
@@ -102,6 +131,14 @@ public class TicketServiceImpl implements TicketService {
         ticket.setResolutionSummary(Summary);
         ticket.updateTicketStatus(TStatus.InProgress);
 
+        Update(ticket);
+        UpdateTicketHistory(ticket, Action.Commented);
+
+        return Optional.of(ticket);
+    }
+
+    @Override
+    public void UpdateTicketHistory(Ticket ticket, Action action) {
         String currentEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 
         User loggedInUser = userRepository.findByEmail(currentEmail)
@@ -110,13 +147,10 @@ public class TicketServiceImpl implements TicketService {
         TicketHistory history = new TicketHistory(
                 loggedInUser,
                 ticket,
-                Action.Commented
+                action
         );
 
-        ticketRepository.save(ticket);
         ticketHistoryRepository.save(history);
-
-        return Optional.of(ticket);
     }
 
 }
