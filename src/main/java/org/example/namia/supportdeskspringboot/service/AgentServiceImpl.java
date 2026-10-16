@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +32,8 @@ public class AgentServiceImpl implements AgentService {
 
     @Override
     public List<Agent> GetAll() {
-        return List.of();
+        return StreamSupport.stream(agentRepository.findAll().spliterator(), false)
+                .toList();
     }
 
     @Override

@@ -53,7 +53,7 @@ public class Ticket {
 
     public String ResolutionSummary;
     public String Version;
-    public Boolean IsDeleted;
+    public Boolean IsDeleted = Boolean.FALSE;
 
     @OneToMany
     private List<Comment> Comments = new ArrayList<>();

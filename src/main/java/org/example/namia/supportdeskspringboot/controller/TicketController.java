@@ -61,6 +61,20 @@ public class TicketController {
         ));
     }
 
+    @DeleteMapping("/{id}/delete")
+    public ResponseEntity<Success<?>> deleteTicket(
+            @PathVariable UUID id
+    )
+    {
+        ticketService.Delete(id);
+
+        return ResponseEntity.ok(new Success<>(
+                "",
+                "Ticket deleted"
+        ));
+
+    }
+
     @PutMapping("/{id}/assigner")
     public ResponseEntity<Success<Ticket>> assignerTicket(
             @PathVariable UUID id,

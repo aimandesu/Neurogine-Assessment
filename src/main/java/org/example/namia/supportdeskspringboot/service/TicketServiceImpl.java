@@ -48,7 +48,10 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public List<Ticket> GetAll() {
-        return StreamSupport.stream(ticketRepository.findAll().spliterator(), false)
+//        return StreamSupport.stream(ticketRepository.findAll().spliterator(), false)
+//                .toList();
+        return ticketRepository.findAll().stream()
+                .filter(t -> !t.getIsDeleted())
                 .toList();
     }
 
