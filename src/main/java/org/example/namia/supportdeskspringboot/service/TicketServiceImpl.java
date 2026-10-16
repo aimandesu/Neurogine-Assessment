@@ -5,8 +5,14 @@ import lombok.RequiredArgsConstructor;
 import org.example.namia.supportdeskspringboot.exception.ResourceNotFoundException;
 import org.example.namia.supportdeskspringboot.model.entity.Agent;
 import org.example.namia.supportdeskspringboot.model.entity.Ticket;
+import org.example.namia.supportdeskspringboot.model.entity.TicketHistory;
+import org.example.namia.supportdeskspringboot.model.entity.User;
+import org.example.namia.supportdeskspringboot.model.enums.Action;
 import org.example.namia.supportdeskspringboot.model.enums.TStatus;
+import org.example.namia.supportdeskspringboot.repository.TicketHistoryRepository;
 import org.example.namia.supportdeskspringboot.repository.TicketRepository;
+import org.example.namia.supportdeskspringboot.repository.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +25,8 @@ import java.util.stream.StreamSupport;
 public class TicketServiceImpl implements TicketService {
 
     private final TicketRepository ticketRepository;
+    private final TicketHistoryRepository ticketHistoryRepository;
+    private final UserRepository userRepository;
 
     @Override
     @Transactional
@@ -79,6 +87,36 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public Optional<Ticket> UnassignAgent(UUID TicketId, Agent Agent) {
         return Optional.empty();
+    }
+
+    @Override
+    public Optional<Ticket> ReopenTicket(UUID TicketId, String Summary) {
+
+        Ticket ticket = Get(TicketId).orElseThrow(
+                () -> new ResourceNotFoundException(
+                        "Ticket.NOT_FOUND",
+                        "Ticket not found"
+                )
+        );
+
+        ticket.setResolutionSummary(Summary);
+        ticket.updateTicketStatus(TStatus.InProgress);
+
+        String currentEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        User loggedInUser = userRepository.findByEmail(currentEmail)
+                .orElseThrow(() -> new ResourceNotFoundException("User.NOT_FOUND", "User not found"));
+
+        TicketHistory history = new TicketHistory(
+                loggedInUser,
+                ticket,
+                Action.Commented
+        );
+
+        ticketRepository.save(ticket);
+        ticketHistoryRepository.save(history);
+
+        return Optional.of(ticket);
     }
 
 }

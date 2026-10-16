@@ -91,8 +91,13 @@ public class Ticket {
                 this.TicketSeq);
     }
 
-    public void setReopenCount(Integer ReopenCount)
+    private void setReopenCount(Long ReopenCount)
     {
+        if (this.ReopenCount > 3)
+        {
+            throw new IllegalStateException("Can't reopen ticket more than 3 times");
+        }
+
         this.ReopenCount = ReopenCount + 1L;
     }
 
@@ -138,6 +143,12 @@ public class Ticket {
 
         if (this.TicketStatus == TStatus.Resolved)
         {
+
+            if (this.ResolutionSummary.isEmpty())
+            {
+                throw new IllegalStateException("Resolution Summary is not provided. Please Provide.");
+            }
+
             this.ResolvedDate = OffsetDateTime.now();
         }
 
@@ -206,10 +217,22 @@ public class Ticket {
         if (currentStatus == TStatus.Resolved &&
                 (newStatus == TStatus.Closed || newStatus == TStatus.InProgress)
         ) {
+
+            reopeningTicket(currentStatus, newStatus);
+
             return true;
         }
 
         return false;
+    }
+
+    public void reopeningTicket(TStatus currentStatus, TStatus newStatus)
+    {
+        if ( currentStatus == TStatus.Resolved
+                && newStatus == TStatus.InProgress)
+        {
+            this.setReopenCount(this.getReopenCount());
+        }
     }
 
 }

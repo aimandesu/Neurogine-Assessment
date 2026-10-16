@@ -9,4 +9,5 @@ import java.util.UUID;
 public interface TicketService extends IBaseRepository<Ticket> {
     Optional<Ticket> AssignAgent(UUID TicketId, Agent Agent);
     Optional<Ticket> UnassignAgent(UUID TicketId, Agent Agent);
+    Optional<Ticket> ReopenTicket(UUID TicketId, String Summary);
 }
