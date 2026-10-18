@@ -1,6 +1,7 @@
 package org.example.namia.supportdeskspringboot.controller;
 
 import org.example.namia.supportdeskspringboot.exception.EmailAlreadyExistsException;
+import org.example.namia.supportdeskspringboot.exception.ResourceNotFoundException;
 import org.example.namia.supportdeskspringboot.model.dto.request.LoginRequest;
 import org.example.namia.supportdeskspringboot.model.dto.request.RegisterRequest;
 import org.example.namia.supportdeskspringboot.model.dto.response.JwtResponse;
@@ -70,8 +71,14 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(loginRequest.email(), loginRequest.password())
         );
 
+        User user = userService.findByEmail(loginRequest.email())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "NOT FOUND",
+                        "User not found"
+                ));
+
         String jwt = jwtUtils.generateToken(authentication.getName());
-        return ResponseEntity.ok(new JwtResponse(jwt));
+        return ResponseEntity.ok(new JwtResponse(jwt, user));
     }
 
     //REFRESH, LOG OUT LEFT
