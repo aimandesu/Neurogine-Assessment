@@ -73,4 +73,6 @@ public class AuthController {
         String jwt = jwtUtils.generateToken(authentication.getName());
         return ResponseEntity.ok(new JwtResponse(jwt));
     }
+
+    //REFRESH, LOG OUT LEFT
 }

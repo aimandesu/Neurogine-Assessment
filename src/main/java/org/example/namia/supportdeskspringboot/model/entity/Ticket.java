@@ -1,5 +1,6 @@
 package org.example.namia.supportdeskspringboot.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.namia.supportdeskspringboot.model.enums.Priority;
@@ -55,8 +56,16 @@ public class Ticket {
     public String Version;
     public Boolean IsDeleted = Boolean.FALSE;
 
-    @OneToMany
+    @OneToMany(mappedBy = "ticket")
+    @JsonManagedReference
     private List<Comment> Comments = new ArrayList<>();
+
+    /* NOTE FOR COMMENT - TICKET
+    *   @OneToMany(mappedBy = "ticket")
+        @JsonManagedReference
+        private List<Comment> Comments = new ArrayList<>();
+    *
+    * */
 
     @OneToMany
     private List<Attachment> Attachments = new ArrayList<>();

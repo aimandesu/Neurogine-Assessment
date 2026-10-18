@@ -2,10 +2,14 @@ package org.example.namia.supportdeskspringboot.controller;
 
 import jakarta.validation.Valid;
 import org.example.namia.supportdeskspringboot.exception.ResourceNotFoundException;
-import org.example.namia.supportdeskspringboot.model.dto.request.CreateTicketRequest;
+import org.example.namia.supportdeskspringboot.model.dto.mapper.TicketMapper;
+import org.example.namia.supportdeskspringboot.model.dto.request.CreateUpdateTicketRequest;
+import org.example.namia.supportdeskspringboot.model.dto.request.UpdateStatusRequest;
 import org.example.namia.supportdeskspringboot.model.dto.request.UpdateTicketStatusRequest;
+import org.example.namia.supportdeskspringboot.model.dto.response.TicketDto;
 import org.example.namia.supportdeskspringboot.model.entity.Agent;
 import org.example.namia.supportdeskspringboot.model.entity.Ticket;
+import org.example.namia.supportdeskspringboot.model.enums.Action;
 import org.example.namia.supportdeskspringboot.model.enums.TStatus;
 import org.example.namia.supportdeskspringboot.model.shared.Success;
 import org.example.namia.supportdeskspringboot.service.AgentService;
@@ -23,15 +27,17 @@ public class TicketController {
 
     private final TicketService ticketService;
     private final AgentService agentService;
+    private final TicketMapper ticketMapper;
 
 
-    public TicketController(TicketService ticketService, AgentService agentService) {
+    public TicketController(TicketService ticketService, AgentService agentService, TicketMapper ticketMapper) {
         this.ticketService = ticketService;
         this.agentService = agentService;
+        this.ticketMapper = ticketMapper;
     }
 
     @PostMapping()
-    public ResponseEntity<Success<Ticket>> createTicket(@RequestBody final CreateTicketRequest request)
+    public ResponseEntity<Success<Ticket>> createTicket(@RequestBody final CreateUpdateTicketRequest request)
     {
         Ticket ticket = new Ticket();
         ticket.setTitle(request.title());
@@ -49,19 +55,73 @@ public class TicketController {
         );
 
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<Success<Ticket>> updateTicket(
+            @PathVariable UUID id,
+            @Valid @RequestBody CreateUpdateTicketRequest request)
+    {
 
+        Ticket ticket = ticketService.Get(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "NOT FOUND",
+                        "Ticket not found"
+                ));
+
+        ticket.setTitle(request.title());
+        ticket.setDescription(request.description());
+        ticket.setCustomerName(request.customerName());
+        ticket.setCustomerEmail(request.customerEmail());
+        ticket.setPriority(request.priority());
+
+        Ticket updatedTicket = ticketService.Update(ticket);
+
+        if (ticket.getPriority() != request.priority())
+        {
+            ticketService.UpdateTicketHistory(
+                    updatedTicket, Action.PriorityChanged);
+        }
+
+        return ResponseEntity.ok(new Success<>(
+                updatedTicket,
+                "Ticket updated"
+        ));
+
+    }
+
+    // CHANGE TO PAGINATION
     @GetMapping()
-    public ResponseEntity<Success<List<Ticket>>> getAllTicket()
+    public ResponseEntity<Success<List<TicketDto>>> getAllTicket()
     {
         List<Ticket> tickets = ticketService.GetAll();
 
+        List<TicketDto> ticketDto = ticketMapper.toDtoList(tickets);
+
         return ResponseEntity.ok(new Success<>(
-                tickets,
+                ticketDto,
                 "got all tickets"
         ));
     }
 
-    @DeleteMapping("/{id}/delete")
+    @GetMapping("/{id}")
+    public ResponseEntity<Success<Ticket>> getTicket(
+            @PathVariable UUID Id
+    )
+    {
+        Ticket ticket = ticketService.Get(Id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "NOT FOUND",
+                        "Ticket not found"
+                ));
+
+        return ResponseEntity.ok(new Success<>(
+                ticket,
+                "Ticket found"
+        ));
+
+    }
+
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<Success<?>> deleteTicket(
             @PathVariable UUID id
     )
@@ -75,10 +135,11 @@ public class TicketController {
 
     }
 
-    @PutMapping("/{id}/assigner")
-    public ResponseEntity<Success<Ticket>> assignerTicket(
+    @PutMapping("/{id}/assignee")
+    public ResponseEntity<Success<Ticket>> assignTicket(
             @PathVariable UUID id,
-            @Valid @RequestBody UpdateTicketStatusRequest request) {
+            @Valid @RequestBody UpdateTicketStatusRequest request
+    ) {
         Agent agent = agentService.Get(request.getAgentId())
                 .orElseThrow(
                         () -> new ResourceNotFoundException(
@@ -87,10 +148,12 @@ public class TicketController {
                         )
                 );
 
-        Optional<Ticket> updatedTicket = switch (request.getAssignerOption()) {
-            case Assign -> ticketService.AssignAgent(id, agent);
-            case Unassign -> ticketService.UnassignAgent(id, agent);
-        };
+//        Optional<Ticket> updatedTicket = switch (request.getAssignerOption()) {
+//            case Assign -> ticketService.AssignAgent(id, agent);
+//            case Unassign -> ticketService.UnassignAgent(id, agent);
+//        };
+
+        Optional<Ticket> updatedTicket = ticketService.AssignAgent(id, agent);
 
         if (updatedTicket.isEmpty()) {
             throw new ResourceNotFoundException(
@@ -101,6 +164,64 @@ public class TicketController {
         return ResponseEntity.ok(new Success<>(
                 updatedTicket.get(),
                 "Ticket Assigner successful"
+        ));
+
+    }
+
+    @DeleteMapping("/{id}/assignee")
+    public ResponseEntity<Success<Ticket>> unassingnTicket(
+            @PathVariable UUID id,
+            @Valid @RequestBody UpdateTicketStatusRequest request
+    ) {
+
+        Agent agent = agentService.Get(request.getAgentId())
+                .orElseThrow(
+                        () -> new ResourceNotFoundException(
+                                "NOT FOUND",
+                                "Agent not found"
+                        )
+                );
+
+        Ticket updatedTicket = ticketService.UnassignAgent(id, agent)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "NOT FOUND",
+                        "Ticket to unassign not found"
+                ));
+
+        return ResponseEntity.ok(new Success<>(
+                updatedTicket,
+                "Ticket unassign successful"
+        ));
+
+    }
+
+    @PostMapping("/{id}/status")
+    public ResponseEntity<Success<Ticket>> UpdateStatus(
+            @PathVariable UUID id,
+            @Valid @RequestBody UpdateStatusRequest request
+    )
+    {
+
+        Ticket ticket = ticketService.Get(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "NOT FOUND",
+                        "Ticket not found"
+                ));
+
+        ticket.setTicketStatus(request.status());
+        ticket.setResolutionSummary(request.resolutionSummary());
+
+        Ticket updatedTicket = ticketService.Update(ticket);
+
+        if (ticket.getTicketStatus() != request.status())
+        {
+            ticketService.UpdateTicketHistory(
+                    updatedTicket, Action.StatusChanged);
+        }
+
+        return ResponseEntity.ok(new Success<>(
+                updatedTicket,
+                "Ticket status changed"
         ));
 
     }

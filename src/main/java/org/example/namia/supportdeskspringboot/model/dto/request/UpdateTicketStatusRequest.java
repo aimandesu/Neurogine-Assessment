@@ -13,7 +13,7 @@ public class UpdateTicketStatusRequest {
     @NotNull(message = "Agent Id is required")
     private UUID AgentId;
 
-    @NotNull(message = "Option is required")
-    private AssignerOption AssignerOption;
+//    @NotNull(message = "Option is required")
+//    private AssignerOption AssignerOption;
 
 }
