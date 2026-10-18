@@ -15,6 +15,16 @@ public interface CommentMapper {
 
     List<CommentDto> toDtoList(List<Comment> comments);
 
-    TicketDto toTicketDto(Ticket ticket);
+    /*
+    * What if a Comment really needs to map its parent Ticket?
+    *
+    * If your CommentDto has a field like TicketDto ticket inside it,
+    * and you absolutely must map it backwards, you will create an infinite loop
+    * where Ticket maps Comment, which maps Ticket, which maps Comment.
+    *
+    * To break this cycle, you must use MapStruct's @Context cycle tracking
+    * or create a specialized, shallow mapping method that ignores the relationship fields
+    * using @Mapping(target = "comments", ignore = true).
+    * */
 
 }

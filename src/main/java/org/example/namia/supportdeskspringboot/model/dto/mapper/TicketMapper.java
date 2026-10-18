@@ -8,13 +8,11 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {CommentMapper.class})
 public interface TicketMapper {
 
     TicketDto toDto(Ticket ticket);
 
     List<TicketDto> toDtoList(List<Ticket> tickets);
-
-    CommentDto toCommentDto(Comment comment);
 
 }

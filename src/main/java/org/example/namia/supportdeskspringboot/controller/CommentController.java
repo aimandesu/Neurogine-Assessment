@@ -16,15 +16,13 @@ import java.util.List;
 public class CommentController {
 
     private final CommentService commentService;
-    private final TicketService ticketService;
     private final CommentMapper commentMapper;
 
     public CommentController(
             CommentService commentService,
-            TicketService ticketService, CommentMapper commentMapper
+            CommentMapper commentMapper
     ) {
         this.commentService = commentService;
-        this.ticketService = ticketService;
         this.commentMapper = commentMapper;
     }
 

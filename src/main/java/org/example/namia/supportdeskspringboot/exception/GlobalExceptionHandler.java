@@ -37,4 +37,14 @@ public class GlobalExceptionHandler {
         // HTTP 409 Conflict is the standard status for duplicate resources
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
+
+    @ExceptionHandler(AgentHasActiveTicketsException.class)
+    public Failure<?> handleAgentHasActiveTickets(AgentHasActiveTicketsException ex) {
+        return new Failure<>(
+                "Ticket Error",
+                ex.getMessage(),
+                ex.getBlockingTickets()
+        );
+    }
+
 }

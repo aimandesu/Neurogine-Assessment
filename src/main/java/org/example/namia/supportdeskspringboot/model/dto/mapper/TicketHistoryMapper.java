@@ -11,15 +11,9 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {TicketMapper.class})
 public interface TicketHistoryMapper {
     TicketHistoryDto toDto(TicketHistory ticketHistory);
     List<TicketHistoryDto> toDtoList(List<TicketHistory> ticketHistories);
-
-
-//    @Mapping(target = "comments", ignore = true)
-    TicketDto toDto(Ticket ticket);
-
-    CommentDto toCommentDto(Comment comment);
 }
 

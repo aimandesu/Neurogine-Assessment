@@ -2,26 +2,23 @@ package org.example.namia.supportdeskspringboot.controller;
 
 import jakarta.validation.Valid;
 import org.example.namia.supportdeskspringboot.exception.ResourceNotFoundException;
+import org.example.namia.supportdeskspringboot.model.dto.mapper.CommentMapper;
 import org.example.namia.supportdeskspringboot.model.dto.mapper.TicketHistoryMapper;
 import org.example.namia.supportdeskspringboot.model.dto.mapper.TicketMapper;
 import org.example.namia.supportdeskspringboot.model.dto.request.CreateCommentRequest;
 import org.example.namia.supportdeskspringboot.model.dto.request.CreateUpdateTicketRequest;
 import org.example.namia.supportdeskspringboot.model.dto.request.UpdateStatusRequest;
 import org.example.namia.supportdeskspringboot.model.dto.request.UpdateTicketStatusRequest;
+import org.example.namia.supportdeskspringboot.model.dto.response.CommentDto;
 import org.example.namia.supportdeskspringboot.model.dto.response.TicketDto;
 import org.example.namia.supportdeskspringboot.model.dto.response.TicketHistoryDto;
-import org.example.namia.supportdeskspringboot.model.entity.Agent;
-import org.example.namia.supportdeskspringboot.model.entity.Comment;
-import org.example.namia.supportdeskspringboot.model.entity.Ticket;
-import org.example.namia.supportdeskspringboot.model.entity.TicketHistory;
+import org.example.namia.supportdeskspringboot.model.entity.*;
 import org.example.namia.supportdeskspringboot.model.enums.Action;
 import org.example.namia.supportdeskspringboot.model.enums.TStatus;
 import org.example.namia.supportdeskspringboot.model.shared.Success;
-import org.example.namia.supportdeskspringboot.service.AgentService;
-import org.example.namia.supportdeskspringboot.service.CommentService;
-import org.example.namia.supportdeskspringboot.service.TicketHistoryService;
-import org.example.namia.supportdeskspringboot.service.TicketService;
+import org.example.namia.supportdeskspringboot.service.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +37,7 @@ public class TicketController {
     //MAPPER
     private final TicketMapper ticketMapper;
     private final TicketHistoryMapper ticketHistoryMapper;
+    private final CommentMapper commentMapper;
 
 
     public TicketController(
@@ -48,7 +46,8 @@ public class TicketController {
             TicketHistoryService ticketHistoryService,
             AgentService agentService,
             TicketMapper ticketMapper,
-            TicketHistoryMapper ticketHistoryMapper
+            TicketHistoryMapper ticketHistoryMapper,
+            CommentMapper commentMapper
     ) {
         this.ticketService = ticketService;
         this.commentService = commentService;
@@ -56,10 +55,13 @@ public class TicketController {
         this.agentService = agentService;
         this.ticketMapper = ticketMapper;
         this.ticketHistoryMapper = ticketHistoryMapper;
+        this.commentMapper = commentMapper;
     }
 
     @PostMapping()
-    public ResponseEntity<Success<Ticket>> createTicket(@RequestBody final CreateUpdateTicketRequest request)
+    @PreAuthorize("hasRole('Admin')")
+    public ResponseEntity<Success<Ticket>> createTicket(
+            @RequestBody final CreateUpdateTicketRequest request)
     {
         Ticket ticket = new Ticket();
         ticket.setTitle(request.title());
@@ -78,7 +80,7 @@ public class TicketController {
 
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Success<Ticket>> updateTicket(
+    public ResponseEntity<Success<TicketDto>> updateTicket(
             @PathVariable UUID id,
             @Valid @RequestBody CreateUpdateTicketRequest request)
     {
@@ -104,7 +106,7 @@ public class TicketController {
         }
 
         return ResponseEntity.ok(new Success<>(
-                updatedTicket,
+                ticketMapper.toDto(updatedTicket),
                 "Ticket updated"
         ));
 
@@ -142,7 +144,7 @@ public class TicketController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Success<Ticket>> getTicket(
+    public ResponseEntity<Success<TicketDto>> getTicket(
             @PathVariable UUID Id
     )
     {
@@ -153,7 +155,7 @@ public class TicketController {
                 ));
 
         return ResponseEntity.ok(new Success<>(
-                ticket,
+                ticketMapper.toDto(ticket),
                 "Ticket found"
         ));
 
@@ -175,7 +177,8 @@ public class TicketController {
     }
 
     @PutMapping("/{id}/assignee")
-    public ResponseEntity<Success<Ticket>> assignTicket(
+    @PreAuthorize("hasRole('Admin')")
+    public ResponseEntity<Success<TicketDto>> assignTicket(
             @PathVariable UUID id,
             @Valid @RequestBody UpdateTicketStatusRequest request
     ) {
@@ -201,14 +204,15 @@ public class TicketController {
         }
 
         return ResponseEntity.ok(new Success<>(
-                updatedTicket.get(),
+                ticketMapper.toDto(updatedTicket.get()),
                 "Ticket Assigner successful"
         ));
 
     }
 
     @DeleteMapping("/{id}/assignee")
-    public ResponseEntity<Success<Ticket>> unassignTicket(
+    @PreAuthorize("hasRole('Admin')")
+    public ResponseEntity<Success<TicketDto>> unassignTicket(
             @PathVariable UUID id,
             @Valid @RequestBody UpdateTicketStatusRequest request
     ) {
@@ -228,14 +232,14 @@ public class TicketController {
                 ));
 
         return ResponseEntity.ok(new Success<>(
-                updatedTicket,
+                ticketMapper.toDto(updatedTicket),
                 "Ticket unassign successful"
         ));
 
     }
 
     @PostMapping("/{id}/status")
-    public ResponseEntity<Success<Ticket>> UpdateStatus(
+    public ResponseEntity<Success<TicketDto>> UpdateStatus(
             @PathVariable UUID id,
             @Valid @RequestBody UpdateStatusRequest request
     )
@@ -247,8 +251,8 @@ public class TicketController {
                         "Ticket not found"
                 ));
 
-        ticket.setTicketStatus(request.status());
         ticket.setResolutionSummary(request.resolutionSummary());
+        ticket.updateTicketStatus(request.status());
 
         Ticket updatedTicket = ticketService.Update(ticket);
 
@@ -259,7 +263,7 @@ public class TicketController {
         }
 
         return ResponseEntity.ok(new Success<>(
-                updatedTicket,
+                ticketMapper.toDto(updatedTicket),
                 "Ticket status changed"
         ));
 
@@ -267,10 +271,10 @@ public class TicketController {
 
     //COMMENTS
     @PostMapping("/{id}/comments")
-    public ResponseEntity<Success<Comment>> createComment(
-            Authentication authentication,
+    public ResponseEntity<Success<CommentDto>> createComment(
             @PathVariable UUID id,
-            @RequestBody final CreateCommentRequest request)
+            @RequestBody final CreateCommentRequest request,
+            Authentication authentication)
     {
         Ticket ticket = ticketService.Get(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
@@ -288,8 +292,10 @@ public class TicketController {
 
         commentService.Create(passedComment);
 
+        CommentDto commentDto = commentMapper.toDto(passedComment);
+
         return ResponseEntity.ok(new Success<>(
-                comment,
+                commentDto,
                 "Comment added to the ticket"
         ));
 

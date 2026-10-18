@@ -16,6 +16,8 @@ public record TicketDto(
         TStatus ticketStatus,
         UUID assignedAgent,
         String reference,
+        String resolutionSummary,
+        Long reopenCount,
         OffsetDateTime createdDate,
         OffsetDateTime dueDate,
         List<CommentDto> comments

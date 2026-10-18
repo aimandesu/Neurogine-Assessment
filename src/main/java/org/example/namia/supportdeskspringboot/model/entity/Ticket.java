@@ -16,14 +16,14 @@ import java.util.UUID;
 @Table(name = "Ticket")
 public class Ticket {
 
-    private Priority Priority;
+    private Priority priority;
 
     @NonNull
-    private TStatus TicketStatus;
+    private TStatus ticketStatus;
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    public UUID Id;
+    public UUID id;
 
     @Column(name = "TicketSeq", insertable = false, updatable = false,
             columnDefinition = "bigint generated always as identity")
@@ -31,32 +31,32 @@ public class Ticket {
     private Long TicketSeq;
 
     @Column(unique = true)
-    private String Reference;
+    private String reference;
 
-    public String Title;
-    public String Description;
-    public String CustomerName;
-    public String CustomerEmail;
-
-    @Setter(AccessLevel.PRIVATE)
-    private UUID AssignedAgent;
-
-    private OffsetDateTime CreatedDate = OffsetDateTime.now();
-    private OffsetDateTime LastModifiedDate = OffsetDateTime.now();
-    public OffsetDateTime ResolvedDate;
-    public OffsetDateTime ClosedDate;
+    public String title;
+    public String description;
+    public String customerName;
+    public String customerEmail;
 
     @Setter(AccessLevel.PRIVATE)
-    private OffsetDateTime DueDate;
+    private UUID assignedAgent;
 
-    private Long ReopenCount;
+    private OffsetDateTime createdDate = OffsetDateTime.now();
+    private OffsetDateTime lastModifiedDate = OffsetDateTime.now();
+    public OffsetDateTime resolvedDate;
+    public OffsetDateTime closedDate;
 
-    public String ResolutionSummary;
-    public String Version;
-    public Boolean IsDeleted = Boolean.FALSE;
+    @Setter(AccessLevel.PRIVATE)
+    private OffsetDateTime dueDate;
+
+    private Long reopenCount = 0L;
+
+    public String resolutionSummary;
+    public String version;
+    public Boolean isDeleted = Boolean.FALSE;
 
     @OneToMany(mappedBy = "ticket")
-    private List<Comment> Comments = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
     /* NOTE FOR COMMENT - TICKET
     *   @OneToMany(mappedBy = "ticket")
@@ -66,10 +66,10 @@ public class Ticket {
     * */
 
     @OneToMany
-    private List<Attachment> Attachments = new ArrayList<>();
+    private List<Attachment> attachments = new ArrayList<>();
 
     public boolean isReadOnly() {
-        return this.TicketStatus == TStatus.Closed;
+        return this.ticketStatus == TStatus.Closed;
     }
 
     // We don't need this because Lombok has auto set for this
@@ -85,56 +85,59 @@ public class Ticket {
 
     public void setPriority(Priority priority)
     {
-        if (this.TicketStatus == TStatus.Resolved || this.TicketStatus == TStatus.Closed)
+        if (this.ticketStatus == TStatus.Resolved || this.ticketStatus == TStatus.Closed)
         {
             throw new IllegalStateException("Can't set priority when Ticket is Resolved" +
                     "Or Ticket is Closed");
         }
 
-        this.Priority = priority;
+        this.priority = priority;
         this.recalculateOverdueDate();
     }
 
     @PostPersist
     public void setReference()
     {
-        this.Reference = String.format(
+        this.reference = String.format(
                 "TCK-%d-%04d",
-                this.CreatedDate.getYear(),
+                this.createdDate.getYear(),
                 this.TicketSeq);
     }
 
     private void setReopenCount(Long ReopenCount)
     {
-        if (this.ReopenCount > 3)
+        if (ReopenCount > 3)
         {
             throw new IllegalStateException("Can't reopen ticket more than 3 times");
         }
 
-        this.ReopenCount = ReopenCount + 1L;
+        this.reopenCount = ReopenCount;
     }
 
 
     private void recalculateOverdueDate()
     {
-        if (this.TicketStatus == TStatus.Closed
-                || this.TicketStatus == TStatus.Resolved)
+        if (this.ticketStatus == TStatus.Closed
+                || this.ticketStatus == TStatus.Resolved)
         {
             return;
         }
 
-        this.DueDate = switch (this.Priority) {
-            case Low -> this.CreatedDate.plusDays(7);
-            case Normal -> this.CreatedDate.plusDays(3);
-            case High -> this.CreatedDate.plusDays(1);
-            case Critical -> this.CreatedDate.plusHours(4);
+        this.dueDate = switch (this.priority) {
+            case Low -> this.createdDate.plusDays(7);
+            case Normal -> this.createdDate.plusDays(3);
+            case High -> this.createdDate.plusDays(1);
+            case Critical -> this.createdDate.plusHours(4);
         };
 
     }
 
     public void updateTicketStatus(TStatus newStatus)
     {
-        if (this.TicketStatus == newStatus) return;
+        if (this.ticketStatus == newStatus)
+        {
+            throw new IllegalStateException("Could not change to same status");
+        }
 
         if (this.isReadOnly())
         {
@@ -142,32 +145,32 @@ public class Ticket {
                     "This ticket is closed and read-only.");
         }
 
-        var isValid = validateStatusTransition(this.TicketStatus, newStatus);
+        var isValid = validateStatusTransition(this.ticketStatus, newStatus);
 
         if (!isValid)
         {
             throw new IllegalStateException(String.format(
                     "Invalid status transition from %s to %s. Either because agent not assigned yet or status not following flow",
-                    this.TicketStatus, newStatus
+                    this.ticketStatus, newStatus
             ));
         }
 
-        this.TicketStatus = newStatus;
+        this.ticketStatus = newStatus;
 
-        if (this.TicketStatus == TStatus.Resolved)
+        if (this.ticketStatus == TStatus.Resolved)
         {
 
-            if (this.ResolutionSummary.isEmpty())
+            if (this.resolutionSummary.isEmpty())
             {
                 throw new IllegalStateException("Resolution Summary is not provided. Please Provide.");
             }
 
-            this.ResolvedDate = OffsetDateTime.now();
+            this.resolvedDate = OffsetDateTime.now();
         }
 
-        if (this.TicketStatus == TStatus.Closed)
+        if (this.ticketStatus == TStatus.Closed)
         {
-            this.ClosedDate = OffsetDateTime.now();
+            this.closedDate = OffsetDateTime.now();
         }
 
     }
@@ -182,13 +185,13 @@ public class Ticket {
             ));
         }
 
-        AssignedAgent = agent.id;
+        assignedAgent = agent.id;
 
     }
 
     public void UnassignAgent(Agent agent)
     {
-        if (AssignedAgent != agent.id)
+        if (assignedAgent != agent.id)
         {
             throw new IllegalStateException(String.format(
                     "Cannot unassign inactive agent: %s to a ticket that doesnt belong to this agent.",
@@ -196,7 +199,7 @@ public class Ticket {
             ));
         }
 
-        AssignedAgent = null;
+        assignedAgent = null;
     }
 
     public Comment AddComment(Comment comment)
@@ -212,9 +215,9 @@ public class Ticket {
     }
 
     public boolean isOverdue(){
-        return OffsetDateTime.now().isAfter(this.DueDate)
-                && this.TicketStatus != TStatus.Resolved
-                && this.TicketStatus != TStatus.Closed;
+        return OffsetDateTime.now().isAfter(this.dueDate)
+                && this.ticketStatus != TStatus.Resolved
+                && this.ticketStatus != TStatus.Closed;
     }
 
     public boolean validateStatusTransition(TStatus currentStatus, TStatus newStatus) {
@@ -244,7 +247,10 @@ public class Ticket {
         if ( currentStatus == TStatus.Resolved
                 && newStatus == TStatus.InProgress)
         {
-            this.setReopenCount(this.getReopenCount());
+            long currentCount = (this.reopenCount == null) ? 0L : this.reopenCount;
+
+            this.setReopenCount(currentCount + 1L);
+
         }
     }
 
