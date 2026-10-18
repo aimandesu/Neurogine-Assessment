@@ -1,6 +1,5 @@
 package org.example.namia.supportdeskspringboot.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.namia.supportdeskspringboot.model.enums.Priority;
@@ -57,7 +56,6 @@ public class Ticket {
     public Boolean IsDeleted = Boolean.FALSE;
 
     @OneToMany(mappedBy = "ticket")
-    @JsonManagedReference
     private List<Comment> Comments = new ArrayList<>();
 
     /* NOTE FOR COMMENT - TICKET
@@ -176,25 +174,25 @@ public class Ticket {
 
     public void AssignAgent(Agent agent)
     {
-        if (!agent.Active)
+        if (!agent.active)
         {
             throw new IllegalStateException(String.format(
                     "Cannot assign inactive agent: %s to a ticket",
-                    agent.Id
+                    agent.id
             ));
         }
 
-        AssignedAgent = agent.Id;
+        AssignedAgent = agent.id;
 
     }
 
     public void UnassignAgent(Agent agent)
     {
-        if (AssignedAgent != agent.Id)
+        if (AssignedAgent != agent.id)
         {
             throw new IllegalStateException(String.format(
                     "Cannot unassign inactive agent: %s to a ticket that doesnt belong to this agent.",
-                    agent.Id
+                    agent.id
             ));
         }
 

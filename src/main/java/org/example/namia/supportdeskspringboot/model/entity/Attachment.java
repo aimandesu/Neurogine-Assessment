@@ -13,18 +13,18 @@ public class Attachment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    public UUID Id;
+    public UUID id;
 
-    public String OriginalFileName;
-    public String StoredFileName;
-    public String ContentType;
-    public Integer Size;
-    public UUID UploadedBy;
-    public OffsetDateTime UploadedDate = OffsetDateTime.now();
+    public String originalFileName;
+    public String storedFileName;
+    public String contentType;
+    public Integer size;
+    public UUID uploadedBy;
+    public OffsetDateTime uploadedDate = OffsetDateTime.now();
 
 
     @ManyToOne
     @JoinColumn(name = "TicketId")
-    private Ticket Ticket;
+    private Ticket ticket;
 
 }

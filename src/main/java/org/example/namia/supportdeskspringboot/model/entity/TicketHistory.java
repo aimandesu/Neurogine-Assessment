@@ -16,30 +16,30 @@ public class TicketHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    public UUID Id;
+    public UUID id;
 
     @Enumerated(EnumType.STRING)
-    public Action Action;
+    public Action action;
 
-    private OffsetDateTime Timestamp = OffsetDateTime.now();
+    private OffsetDateTime timestamp = OffsetDateTime.now();
 
 
     @ManyToOne
     @JoinColumn(name = "TicketId")
-    private Ticket Ticket;
+    private Ticket ticket;
 
     @ManyToOne
     @JoinColumn(name = "UserId")
-    private User User;
+    private User user;
 
     public TicketHistory(
             User user,
             Ticket ticket,
             Action action) {
-        this.User = user;
-        this.Ticket = ticket;
-        this.Action = action;
-        this.Timestamp = OffsetDateTime.now();
+        this.user = user;
+        this.ticket = ticket;
+        this.action = action;
+        this.timestamp = OffsetDateTime.now();
     }
 
 }

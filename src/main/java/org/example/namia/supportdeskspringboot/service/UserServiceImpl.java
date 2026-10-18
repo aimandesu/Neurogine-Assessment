@@ -6,7 +6,6 @@ import org.example.namia.supportdeskspringboot.model.entity.User;
 import org.example.namia.supportdeskspringboot.model.enums.Roles;
 import org.example.namia.supportdeskspringboot.repository.AgentRepository;
 import org.example.namia.supportdeskspringboot.repository.UserRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
