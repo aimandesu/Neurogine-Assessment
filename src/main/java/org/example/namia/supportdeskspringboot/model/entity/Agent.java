@@ -15,17 +15,17 @@ public class Agent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    public UUID Id;
+    public UUID id;
 
-    public String FullName;
+    public String fullName;
 
     @Enumerated(EnumType.STRING)
-    public Department Department;
+    public Department department;
 
     @Column(unique = true, nullable = false)
-    public String Email;
+    public String email;
 
-    public boolean Active = true;
+    public boolean active = true;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "AssignedAgent")
@@ -33,5 +33,5 @@ public class Agent {
 
     @OneToOne
     @JoinColumn(name = "UserId")
-    private User User;
+    private User user;
 }

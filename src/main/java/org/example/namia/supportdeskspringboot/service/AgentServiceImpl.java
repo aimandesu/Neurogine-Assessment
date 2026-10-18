@@ -1,10 +1,12 @@
 package org.example.namia.supportdeskspringboot.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.namia.supportdeskspringboot.model.dto.request.GetAllAgentRequest;
 import org.example.namia.supportdeskspringboot.model.entity.Agent;
 import org.example.namia.supportdeskspringboot.model.entity.Ticket;
 import org.example.namia.supportdeskspringboot.model.enums.TStatus;
 import org.example.namia.supportdeskspringboot.repository.AgentRepository;
+import org.example.namia.supportdeskspringboot.repository.AgentSpecifications;
 import org.example.namia.supportdeskspringboot.repository.TicketRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +24,7 @@ public class AgentServiceImpl implements AgentService {
 
     @Override
     public Agent Create(Agent entity) {
-        return null;
+        return agentRepository.save(entity);
     }
 
     @Override
@@ -47,10 +49,10 @@ public class AgentServiceImpl implements AgentService {
     }
 
     @Override
-    public List<Ticket> deactivateAgent(Agent agent) {
+    public void deactivateAgent(Agent agent) {
 
         List<Ticket> blockingTickets = ticketRepository.findAll().stream()
-                .filter(t -> t.getAssignedAgent().equals(agent.Id))
+                .filter(t -> t.getAssignedAgent().equals(agent.id))
                 .filter(t -> t.getTicketStatus() == TStatus.New
                         || t.getTicketStatus() == TStatus.InProgress)
                 .toList();
@@ -58,9 +60,18 @@ public class AgentServiceImpl implements AgentService {
         if (blockingTickets.isEmpty()) {
             agent.setActive(false);
             agentRepository.save(agent);
+            return;
         }
 
-        return blockingTickets;
+        throw new IllegalStateException(blockingTickets.toString());
+
+//        return blockingTickets;
     }
+
+    @Override
+    public List<Agent> getAllAgent(GetAllAgentRequest request) {
+        return agentRepository.findAll(AgentSpecifications.filterAgents(request));
+    }
+
 
 }
