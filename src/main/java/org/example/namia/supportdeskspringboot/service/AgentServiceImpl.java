@@ -1,6 +1,8 @@
 package org.example.namia.supportdeskspringboot.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.namia.supportdeskspringboot.exception.AgentHasActiveTicketsException;
+import org.example.namia.supportdeskspringboot.model.dto.mapper.TicketMapper;
 import org.example.namia.supportdeskspringboot.model.dto.request.GetAllAgentRequest;
 import org.example.namia.supportdeskspringboot.model.entity.Agent;
 import org.example.namia.supportdeskspringboot.model.entity.Ticket;
@@ -22,6 +24,9 @@ public class AgentServiceImpl implements AgentService {
     private final AgentRepository agentRepository;
     private final TicketRepository ticketRepository;
 
+    //MAPPER
+    private final TicketMapper ticketMapper;
+
     @Override
     public Agent Create(Agent entity) {
         return agentRepository.save(entity);
@@ -40,7 +45,7 @@ public class AgentServiceImpl implements AgentService {
 
     @Override
     public Agent Update(Agent entity) {
-        return null;
+        return agentRepository.save(entity);
     }
 
     @Override
@@ -51,21 +56,26 @@ public class AgentServiceImpl implements AgentService {
     @Override
     public void deactivateAgent(Agent agent) {
 
-        List<Ticket> blockingTickets = ticketRepository.findAll().stream()
-                .filter(t -> t.getAssignedAgent().equals(agent.id))
-                .filter(t -> t.getTicketStatus() == TStatus.New
-                        || t.getTicketStatus() == TStatus.InProgress)
-                .toList();
+//        List<Ticket> blockingTickets = ticketRepository.findAll().stream()
+//                .filter(t -> t.getAssignedAgent() != null
+//                        && t.getAssignedAgent().equals(agent.id))
+//                .filter(t -> t.getTicketStatus() == TStatus.New
+//                        || t.getTicketStatus() == TStatus.InProgress)
+//                .toList();
 
-        if (blockingTickets.isEmpty()) {
-            agent.setActive(false);
-            agentRepository.save(agent);
-            return;
+        List<Ticket> blockingTickets = ticketRepository.findByAssignedAgentAndTicketStatusIn(
+                agent.id,
+                List.of(TStatus.New, TStatus.InProgress)
+        );
+
+
+        if (!blockingTickets.isEmpty()) {
+            throw new AgentHasActiveTicketsException(ticketMapper.toDtoList(blockingTickets));
         }
 
-        throw new IllegalStateException(blockingTickets.toString());
+        agent.setActive(false);
+        agentRepository.save(agent);
 
-//        return blockingTickets;
     }
 
     @Override

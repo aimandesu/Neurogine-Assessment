@@ -24,7 +24,7 @@ public class AgentSpecifications {
             // 2. Filter by Name (using case-insensitive partial match 'LIKE')
             if (request.name() != null && !request.name().isBlank()) {
                 predicates.add(criteriaBuilder.like(
-                        criteriaBuilder.lower(root.get("name")),
+                        criteriaBuilder.lower(root.get("fullName")),
                         "%" + request.name().toLowerCase() + "%"
                 ));
             }
@@ -36,7 +36,7 @@ public class AgentSpecifications {
 
             // 4. Filter by IsActive (Exact match)
             if (request.isActive() != null) {
-                predicates.add(criteriaBuilder.equal(root.get("isActive"), request.isActive()));
+                predicates.add(criteriaBuilder.equal(root.get("active"), request.isActive()));
             }
 
             // Combine all active filters with AND
