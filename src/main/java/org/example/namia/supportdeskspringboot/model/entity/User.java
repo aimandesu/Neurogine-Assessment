@@ -36,7 +36,7 @@ public class User implements UserDetails {
     public OffsetDateTime createdDate = OffsetDateTime.now();
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public @NonNull Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
     }
 

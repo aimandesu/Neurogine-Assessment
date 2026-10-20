@@ -13,7 +13,10 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", uses = {TicketMapper.class})
 public interface TicketHistoryMapper {
+
+    @Mapping(target = "ticket.comments", ignore = true)
     TicketHistoryDto toDto(TicketHistory ticketHistory);
+
     List<TicketHistoryDto> toDtoList(List<TicketHistory> ticketHistories);
 }
 
