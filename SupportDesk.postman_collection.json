@@ -1,0 +1,2081 @@
+{
+  "info": {
+    "_postman_id": "4a9b0b46-906a-438b-965d-3847933ea010",
+    "name": "SupportDesk",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "33511040"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"aimanafiqbinesam@gmail.com\",\r\n    \"password\": \"MySecurePassword123\",\r\n    \"role\": \"Admin\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localhost}}/api/auth/register",
+              "host": [
+                "{{localhost}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Register",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"namia@gmail.com\",\r\n    \"password\": \"MySecurePassword123\",\r\n    \"role\": \"Admin\"\r\n}\r\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localhost}}/api/auth/register",
+                  "host": [
+                    "{{localhost}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "register"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 20 Oct 2026 02:23:03 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": {\n        \"accountNonExpired\": true,\n        \"accountNonLocked\": true,\n        \"authorities\": [\n            {\n                \"authority\": \"ROLE_Admin\"\n            }\n        ],\n        \"createdDate\": \"2026-10-20T10:23:03.062621502+08:00\",\n        \"credentialsNonExpired\": true,\n        \"email\": \"namia@gmail.com\",\n        \"enabled\": true,\n        \"id\": \"424dca7e-a77d-42dc-bcbd-22fa205c7aa1\",\n        \"password\": \"$2a$10$Sy.3HPHFMdFvbKInC9XtPusL6NKBlA5BL6PP72KVragrnn4K6TZ1y\",\n        \"passwordHash\": \"$2a$10$Sy.3HPHFMdFvbKInC9XtPusL6NKBlA5BL6PP72KVragrnn4K6TZ1y\",\n        \"role\": \"Admin\",\n        \"username\": \"namia@gmail.com\"\n    },\n    \"description\": \"User registered successfully!\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200 || pm.response.code === 201) {",
+                  "    const res = pm.response.json();",
+                  "    // pm.environment.set(\"token\", res.result.jwtAccessToken);",
+                  "    pm.collectionVariables.set(\"token\", res.token);",
+                  "    // pm.environment.set(\"userId\", res.user.id);",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"aimanafiqbinesam@gmail.com\",\r\n    \"password\": \"MySecurePassword123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localhost}}/api/auth/login",
+              "host": [
+                "{{localhost}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Login",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"aimanafiqbinesam@gmail.com\",\r\n    \"password\": \"MySecurePassword123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localhost}}/api/auth/login",
+                  "host": [
+                    "{{localhost}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 20 Oct 2026 02:22:35 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaW1hbmFmaXFiaW5lc2FtQGdtYWlsLmNvbSIsImlhdCI6MTc5MjQ2Mjk1NSwiZXhwIjoxNzkyNTQ5MzU1fQ.lmUNedZLtE0PvBGFI7SXfQbRIHrw3y9RwvYX_x1kySM\",\n    \"type\": \"Bearer\",\n    \"user\": {\n        \"accountNonExpired\": true,\n        \"accountNonLocked\": true,\n        \"authorities\": [\n            {\n                \"authority\": \"ROLE_Admin\"\n            }\n        ],\n        \"createdDate\": \"2026-10-18T20:52:51.698935+08:00\",\n        \"credentialsNonExpired\": true,\n        \"email\": \"aimanafiqbinesam@gmail.com\",\n        \"enabled\": true,\n        \"id\": \"bbd79759-2f06-460d-a212-db1651d4ed59\",\n        \"password\": \"$2a$10$s079TAsDFekTKZIi223c0uuP6Qk64mV7601mYBoVVJTu.cUvY2UMW\",\n        \"passwordHash\": \"$2a$10$s079TAsDFekTKZIi223c0uuP6Qk64mV7601mYBoVVJTu.cUvY2UMW\",\n        \"role\": \"Admin\",\n        \"username\": \"aimanafiqbinesam@gmail.com\"\n    }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ticket",
+      "item": [
+        {
+          "name": "Create Ticket",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"There is a payment bug in prod\",\r\n  \"description\": \"theres issue with payment for our SupportDesk service, please check\",\r\n  \"customerName\": \"John Doe\",\r\n  \"customerEmail\": \"john.doe@example.com\",\r\n  \"priority\": \"High\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localhost}}/api/tickets",
+              "host": [
+                "{{localhost}}"
+              ],
+              "path": [
+                "api",
+                "tickets"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Create Ticket",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"title\": \"There is a payment bug in prod\",\r\n  \"description\": \"theres issue with payment for our SupportDesk service, please check\",\r\n  \"customerName\": \"John Doe\",\r\n  \"customerEmail\": \"john.doe@example.com\",\r\n  \"priority\": \"High\"\r\n}\r\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localhost}}/api/tickets",
+                  "host": [
+                    "{{localhost}}"
+                  ],
+                  "path": [
+                    "api",
+                    "tickets"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 20 Oct 2026 02:25:56 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": {\n        \"TicketSeq\": 4,\n        \"assignedAgent\": null,\n        \"attachments\": [],\n        \"closedDate\": null,\n        \"comments\": [],\n        \"createdDate\": \"2026-10-20T10:25:56.32692849+08:00\",\n        \"customerEmail\": \"john.doe@example.com\",\n        \"customerName\": \"John Doe\",\n        \"description\": \"theres issue with payment for our SupportDesk service, please check\",\n        \"dueDate\": \"2026-10-21T10:25:56.32692849+08:00\",\n        \"id\": \"7a5559b7-9694-496a-bb74-bebd8f14ab76\",\n        \"isDeleted\": false,\n        \"lastModifiedDate\": \"2026-10-20T10:25:56.326955395+08:00\",\n        \"overdue\": false,\n        \"priority\": \"High\",\n        \"readOnly\": false,\n        \"reference\": \"TCK-2026-0004\",\n        \"reopenCount\": 0,\n        \"resolutionSummary\": null,\n        \"resolvedDate\": null,\n        \"ticketStatus\": \"New\",\n        \"title\": \"There is a payment bug in prod\",\n        \"version\": null\n    },\n    \"description\": \"Ticket created\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Soft Delete Ticket",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{localhost}}/api/tickets/:id",
+              "host": [
+                "{{localhost}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "7a5559b7-9694-496a-bb74-bebd8f14ab76"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Soft Delete Ticket",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{localhost}}/api/tickets/:id",
+                  "host": [
+                    "{{localhost}}"
+                  ],
+                  "path": [
+                    "api",
+                    "tickets",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "7a5559b7-9694-496a-bb74-bebd8f14ab76"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 20 Oct 2026 02:27:24 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": \"\",\n    \"description\": \"Ticket deleted\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get All Tickets",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{localhost}}/api/tickets",
+              "host": [
+                "{{localhost}}"
+              ],
+              "path": [
+                "api",
+                "tickets"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get All Tickets",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{localhost}}/api/tickets",
+                  "host": [
+                    "{{localhost}}"
+                  ],
+                  "path": [
+                    "api",
+                    "tickets"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 20 Oct 2026 02:30:27 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": [\n        {\n            \"id\": \"aaf88b25-c64d-4bc1-a92d-5dafba603d44\",\n            \"title\": \"Cannot log in to portal\",\n            \"description\": \"User is getting a 403 forbidden error when logging in.\",\n            \"customerName\": \"John Doe\",\n            \"customerEmail\": \"john.doe@example.com\",\n            \"priority\": \"High\",\n            \"ticketStatus\": \"New\",\n            \"assignedAgent\": null,\n            \"reference\": \"TCK-2026-0001\",\n            \"resolutionSummary\": null,\n            \"reopenCount\": null,\n            \"createdDate\": \"2026-10-17T06:50:41.652444+08:00\",\n            \"dueDate\": \"2026-10-18T06:50:41.652444+08:00\",\n            \"comments\": [\n                {\n                    \"id\": \"7a0da284-91a0-40a0-bb88-682df4c9e2e3\",\n                    \"authorName\": \"testuser@example.com\",\n                    \"body\": \"Nah man\",\n                    \"visibility\": \"Internal\",\n                    \"createdDate\": \"2026-10-17T06:53:32.344055+08:00\"\n                },\n                {\n                    \"id\": \"88f1d9c1-2258-49d5-839c-59c69f7e433b\",\n                    \"authorName\": \"testuser@example.com\",\n                    \"body\": \"how dia hilang\",\n                    \"visibility\": \"Internal\",\n                    \"createdDate\": \"2026-10-17T07:12:00.308475+08:00\"\n                }\n            ]\n        },\n        {\n            \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n            \"title\": \"Seems there is an issue with the dashboard\",\n            \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n            \"customerName\": \"ahmad\",\n            \"customerEmail\": \"ahmad@gmail.com\",\n            \"priority\": \"Low\",\n            \"ticketStatus\": \"InProgress\",\n            \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n            \"reference\": \"TCK-2026-0002\",\n            \"resolutionSummary\": \"done bitch\",\n            \"reopenCount\": 1,\n            \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n            \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n            \"comments\": [\n                {\n                    \"id\": \"10d30a9c-5e4a-4fdd-a4d7-7347589087ac\",\n                    \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                    \"body\": \"Dapat ke status something happen?\",\n                    \"visibility\": \"Internal\",\n                    \"createdDate\": \"2026-10-18T22:57:58.484895+08:00\"\n                },\n                {\n                    \"id\": \"0736a56a-ed4f-4826-97ae-d2fc0f5c402e\",\n                    \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                    \"body\": \"Dapat ke status something happen?\",\n                    \"visibility\": \"Internal\",\n                    \"createdDate\": \"2026-10-18T23:02:42.494451+08:00\"\n                },\n                {\n                    \"id\": \"9f601190-d9ce-48c6-81b2-adb2dbdf18fc\",\n                    \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                    \"body\": \"Dapat ke status something happen?\",\n                    \"visibility\": \"Internal\",\n                    \"createdDate\": \"2026-10-18T23:15:04.144174+08:00\"\n                }\n            ]\n        },\n        {\n            \"id\": \"91bdb89c-3e31-44a6-86a0-03307943b146\",\n            \"title\": \"Bug in prod\",\n            \"description\": \"theres issue with payment, please check\",\n            \"customerName\": \"John Doe\",\n            \"customerEmail\": \"john.doe@example.com\",\n            \"priority\": \"High\",\n            \"ticketStatus\": \"New\",\n            \"assignedAgent\": null,\n            \"reference\": \"TCK-2026-0003\",\n            \"resolutionSummary\": null,\n            \"reopenCount\": null,\n            \"createdDate\": \"2026-10-18T21:50:21.470171+08:00\",\n            \"dueDate\": \"2026-10-19T21:50:21.470171+08:00\",\n            \"comments\": []\n        }\n    ],\n    \"description\": \"got all tickets\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Assigner Ticket",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"AgentId\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localhost}}/api/tickets/:id/assignee",
+              "host": [
+                "{{localhost}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                ":id",
+                "assignee"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "413c9d92-1fe4-4bdc-883a-f1885e22cc12"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Assigner Ticket - Failed",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"AgentId\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localhost}}/api/tickets/:id/assignee",
+                  "host": [
+                    "{{localhost}}"
+                  ],
+                  "path": [
+                    "api",
+                    "tickets",
+                    ":id",
+                    "assignee"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "413c9d92-1fe4-4bdc-883a-f1885e22cc12"
+                    }
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "123"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 20 Oct 2026 02:30:44 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Cannot assign inactive agent: bbd5c3b1-3a67-4aa3-be73-20dc315f4dba to a ticket\",\n    \"description\": \"State Conflict\"\n}"
+            },
+            {
+              "name": "Assigner Ticket - Success",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"AgentId\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localhost}}/api/tickets/:id/assignee",
+                  "host": [
+                    "{{localhost}}"
+                  ],
+                  "path": [
+                    "api",
+                    "tickets",
+                    ":id",
+                    "assignee"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "413c9d92-1fe4-4bdc-883a-f1885e22cc12"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 20 Oct 2026 02:40:42 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": {\n        \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n        \"title\": \"Seems there is an issue with the dashboard\",\n        \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n        \"customerName\": \"ahmad\",\n        \"customerEmail\": \"ahmad@gmail.com\",\n        \"priority\": \"Low\",\n        \"ticketStatus\": \"InProgress\",\n        \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n        \"reference\": \"TCK-2026-0002\",\n        \"resolutionSummary\": \"done bitch\",\n        \"reopenCount\": 1,\n        \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n        \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n        \"comments\": [\n            {\n                \"id\": \"10d30a9c-5e4a-4fdd-a4d7-7347589087ac\",\n                \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                \"body\": \"Dapat ke status something happen?\",\n                \"visibility\": \"Internal\",\n                \"createdDate\": \"2026-10-18T22:57:58.484895+08:00\"\n            },\n            {\n                \"id\": \"0736a56a-ed4f-4826-97ae-d2fc0f5c402e\",\n                \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                \"body\": \"Dapat ke status something happen?\",\n                \"visibility\": \"Internal\",\n                \"createdDate\": \"2026-10-18T23:02:42.494451+08:00\"\n            },\n            {\n                \"id\": \"9f601190-d9ce-48c6-81b2-adb2dbdf18fc\",\n                \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                \"body\": \"Dapat ke status something happen?\",\n                \"visibility\": \"Internal\",\n                \"createdDate\": \"2026-10-18T23:15:04.144174+08:00\"\n            }\n        ]\n    },\n    \"description\": \"Ticket Assigner successful\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get All Ticket History",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{localhost}}/api/tickets/:ticketId/history",
+              "host": [
+                "{{localhost}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                ":ticketId",
+                "history"
+              ],
+              "variable": [
+                {
+                  "key": "ticketId",
+                  "value": "aaf88b25-c64d-4bc1-a92d-5dafba603d44"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get All Ticket History",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{localhost}}/api/tickets/:ticketId/history",
+                  "host": [
+                    "{{localhost}}"
+                  ],
+                  "path": [
+                    "api",
+                    "tickets",
+                    ":ticketId",
+                    "history"
+                  ],
+                  "variable": [
+                    {
+                      "key": "ticketId",
+                      "value": "aaf88b25-c64d-4bc1-a92d-5dafba603d44"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 20 Oct 2026 02:41:09 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": [\n        {\n            \"id\": \"04967cfc-436e-4720-8ff5-287e4020f0d6\",\n            \"action\": \"Created\",\n            \"timestamp\": \"2026-10-17T06:50:41.663093+08:00\",\n            \"ticket\": {\n                \"id\": \"aaf88b25-c64d-4bc1-a92d-5dafba603d44\",\n                \"title\": \"Cannot log in to portal\",\n                \"description\": \"User is getting a 403 forbidden error when logging in.\",\n                \"customerName\": \"John Doe\",\n                \"customerEmail\": \"john.doe@example.com\",\n                \"priority\": \"High\",\n                \"ticketStatus\": \"New\",\n                \"assignedAgent\": null,\n                \"reference\": \"TCK-2026-0001\",\n                \"resolutionSummary\": null,\n                \"reopenCount\": null,\n                \"createdDate\": \"2026-10-17T06:50:41.652444+08:00\",\n                \"dueDate\": \"2026-10-18T06:50:41.652444+08:00\",\n                \"comments\": [\n                    {\n                        \"id\": \"7a0da284-91a0-40a0-bb88-682df4c9e2e3\",\n                        \"authorName\": \"testuser@example.com\",\n                        \"body\": \"Nah man\",\n                        \"visibility\": \"Internal\",\n                        \"createdDate\": \"2026-10-17T06:53:32.344055+08:00\"\n                    },\n                    {\n                        \"id\": \"88f1d9c1-2258-49d5-839c-59c69f7e433b\",\n                        \"authorName\": \"testuser@example.com\",\n                        \"body\": \"how dia hilang\",\n                        \"visibility\": \"Internal\",\n                        \"createdDate\": \"2026-10-17T07:12:00.308475+08:00\"\n                    }\n                ]\n            }\n        }\n    ],\n    \"description\": \"got all ticket histories\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Ticket",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Seems there is an issue with the dashboard\",\n    \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n    \"customerName\": \"ahmad\",\n    \"customerEmail\": \"ahmad@gmail.com\",\n    \"priority\": \"Low\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localhost}}/api/tickets/:id",
+              "host": [
+                "{{localhost}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "413c9d92-1fe4-4bdc-883a-f1885e22cc12"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Update Ticket",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\": \"Seems there is an issue with the dashboard\",\n    \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n    \"customerName\": \"ahmad\",\n    \"customerEmail\": \"ahmad@gmail.com\",\n    \"priority\": \"Low\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localhost}}/api/tickets/:id",
+                  "host": [
+                    "{{localhost}}"
+                  ],
+                  "path": [
+                    "api",
+                    "tickets",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "413c9d92-1fe4-4bdc-883a-f1885e22cc12"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 20 Oct 2026 02:30:02 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": {\n        \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n        \"title\": \"Seems there is an issue with the dashboard\",\n        \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n        \"customerName\": \"ahmad\",\n        \"customerEmail\": \"ahmad@gmail.com\",\n        \"priority\": \"Low\",\n        \"ticketStatus\": \"InProgress\",\n        \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n        \"reference\": \"TCK-2026-0002\",\n        \"resolutionSummary\": \"done bitch\",\n        \"reopenCount\": 1,\n        \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n        \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n        \"comments\": [\n            {\n                \"id\": \"10d30a9c-5e4a-4fdd-a4d7-7347589087ac\",\n                \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                \"body\": \"Dapat ke status something happen?\",\n                \"visibility\": \"Internal\",\n                \"createdDate\": \"2026-10-18T22:57:58.484895+08:00\"\n            },\n            {\n                \"id\": \"0736a56a-ed4f-4826-97ae-d2fc0f5c402e\",\n                \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                \"body\": \"Dapat ke status something happen?\",\n                \"visibility\": \"Internal\",\n                \"createdDate\": \"2026-10-18T23:02:42.494451+08:00\"\n            },\n            {\n                \"id\": \"9f601190-d9ce-48c6-81b2-adb2dbdf18fc\",\n                \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                \"body\": \"Dapat ke status something happen?\",\n                \"visibility\": \"Internal\",\n                \"createdDate\": \"2026-10-18T23:15:04.144174+08:00\"\n            }\n        ]\n    },\n    \"description\": \"Ticket updated\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Status",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"status\": \"Resolved\",\n    \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localhost}}/api/tickets/:id/status",
+              "host": [
+                "{{localhost}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                ":id",
+                "status"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "413c9d92-1fe4-4bdc-883a-f1885e22cc12"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Update Status - failed reason same status",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"status\": \"InProgress\",\n    \"resolutionSummary\": \"done\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localhost}}/api/tickets/:id/status",
+                  "host": [
+                    "{{localhost}}"
+                  ],
+                  "path": [
+                    "api",
+                    "tickets",
+                    ":id",
+                    "status"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "413c9d92-1fe4-4bdc-883a-f1885e22cc12"
+                    }
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "76"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 20 Oct 2026 02:41:29 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Could not change to same status\",\n    \"description\": \"State Conflict\"\n}"
+            },
+            {
+              "name": "Update Status - failed reason flow",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"status\": \"New\",\n    \"resolutionSummary\": \"done\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localhost}}/api/tickets/:id/status",
+                  "host": [
+                    "{{localhost}}"
+                  ],
+                  "path": [
+                    "api",
+                    "tickets",
+                    ":id",
+                    "status"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "413c9d92-1fe4-4bdc-883a-f1885e22cc12"
+                    }
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "161"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 20 Oct 2026 02:43:15 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Invalid status transition from InProgress to New. Either because agent not assigned yet or status not following flow\",\n    \"description\": \"State Conflict\"\n}"
+            },
+            {
+              "name": "Update Status - success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"status\": \"Resolved\",\n    \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localhost}}/api/tickets/:id/status",
+                  "host": [
+                    "{{localhost}}"
+                  ],
+                  "path": [
+                    "api",
+                    "tickets",
+                    ":id",
+                    "status"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "413c9d92-1fe4-4bdc-883a-f1885e22cc12"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 20 Oct 2026 02:44:49 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": {\n        \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n        \"title\": \"Seems there is an issue with the dashboard\",\n        \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n        \"customerName\": \"ahmad\",\n        \"customerEmail\": \"ahmad@gmail.com\",\n        \"priority\": \"Low\",\n        \"ticketStatus\": \"Resolved\",\n        \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n        \"reference\": \"TCK-2026-0002\",\n        \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n        \"reopenCount\": 1,\n        \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n        \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n        \"comments\": [\n            {\n                \"id\": \"10d30a9c-5e4a-4fdd-a4d7-7347589087ac\",\n                \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                \"body\": \"Dapat ke status something happen?\",\n                \"visibility\": \"Internal\",\n                \"createdDate\": \"2026-10-18T22:57:58.484895+08:00\"\n            },\n            {\n                \"id\": \"0736a56a-ed4f-4826-97ae-d2fc0f5c402e\",\n                \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                \"body\": \"Dapat ke status something happen?\",\n                \"visibility\": \"Internal\",\n                \"createdDate\": \"2026-10-18T23:02:42.494451+08:00\"\n            },\n            {\n                \"id\": \"9f601190-d9ce-48c6-81b2-adb2dbdf18fc\",\n                \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                \"body\": \"Dapat ke status something happen?\",\n                \"visibility\": \"Internal\",\n                \"createdDate\": \"2026-10-18T23:15:04.144174+08:00\"\n            }\n        ]\n    },\n    \"description\": \"Ticket status changed\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Agent",
+      "item": [
+        {
+          "name": "Get All Agents",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{localhost}}/api/agents",
+              "host": [
+                "{{localhost}}"
+              ],
+              "path": [
+                "api",
+                "agents"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "test@gmail.com",
+                  "disabled": true
+                },
+                {
+                  "key": "name",
+                  "value": "test",
+                  "disabled": true
+                },
+                {
+                  "key": "department",
+                  "value": "Technical",
+                  "disabled": true
+                },
+                {
+                  "key": "isActive",
+                  "value": "true",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get All Agents",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{localhost}}/api/agents",
+                  "host": [
+                    "{{localhost}}"
+                  ],
+                  "path": [
+                    "api",
+                    "agents"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "test@gmail.com",
+                      "disabled": true
+                    },
+                    {
+                      "key": "name",
+                      "value": "test",
+                      "disabled": true
+                    },
+                    {
+                      "key": "department",
+                      "value": "Technical",
+                      "disabled": true
+                    },
+                    {
+                      "key": "isActive",
+                      "value": "true",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 20 Oct 2026 02:36:38 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": [\n        {\n            \"id\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n            \"fullName\": \"Aiman Afiq bin Esam\",\n            \"department\": \"Technical\",\n            \"email\": \"aimanafiqbinesam@mail.com\",\n            \"active\": true,\n            \"tickets\": [\n                {\n                    \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                    \"title\": \"Seems there is an issue with the dashboard\",\n                    \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                    \"customerName\": \"ahmad\",\n                    \"customerEmail\": \"ahmad@gmail.com\",\n                    \"priority\": \"Low\",\n                    \"ticketStatus\": \"InProgress\",\n                    \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                    \"reference\": \"TCK-2026-0002\",\n                    \"resolutionSummary\": \"done bitch\",\n                    \"reopenCount\": 1,\n                    \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                    \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                    \"comments\": [\n                        {\n                            \"id\": \"10d30a9c-5e4a-4fdd-a4d7-7347589087ac\",\n                            \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                            \"body\": \"Dapat ke status something happen?\",\n                            \"visibility\": \"Internal\",\n                            \"createdDate\": \"2026-10-18T22:57:58.484895+08:00\"\n                        },\n                        {\n                            \"id\": \"0736a56a-ed4f-4826-97ae-d2fc0f5c402e\",\n                            \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                            \"body\": \"Dapat ke status something happen?\",\n                            \"visibility\": \"Internal\",\n                            \"createdDate\": \"2026-10-18T23:02:42.494451+08:00\"\n                        },\n                        {\n                            \"id\": \"9f601190-d9ce-48c6-81b2-adb2dbdf18fc\",\n                            \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                            \"body\": \"Dapat ke status something happen?\",\n                            \"visibility\": \"Internal\",\n                            \"createdDate\": \"2026-10-18T23:15:04.144174+08:00\"\n                        }\n                    ]\n                }\n            ],\n            \"user\": {\n                \"accountNonExpired\": true,\n                \"accountNonLocked\": true,\n                \"authorities\": [\n                    {\n                        \"authority\": \"ROLE_Agent\"\n                    }\n                ],\n                \"createdDate\": \"2026-10-17T06:49:41.288725+08:00\",\n                \"credentialsNonExpired\": true,\n                \"email\": \"testuser@example.com\",\n                \"enabled\": true,\n                \"id\": \"985b5d79-e0ed-43b4-aca7-9bdb63e222f9\",\n                \"password\": \"$2a$10$W4CMMpQ.KW1R6KE7y0ZKVOeahj.Fpc4o0XIUpyXKC/7wu.37oShlS\",\n                \"passwordHash\": \"$2a$10$W4CMMpQ.KW1R6KE7y0ZKVOeahj.Fpc4o0XIUpyXKC/7wu.37oShlS\",\n                \"role\": \"Agent\",\n                \"username\": \"testuser@example.com\"\n            }\n        }\n    ],\n    \"description\": \"got all agents\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Agent",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{localhost}}/api/agents/:id",
+              "host": [
+                "{{localhost}}"
+              ],
+              "path": [
+                "api",
+                "agents",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "bbd5c3b1-3a67-4aa3-be73-20dc315f4dba"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get Agent",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{localhost}}/api/agents/:id",
+                  "host": [
+                    "{{localhost}}"
+                  ],
+                  "path": [
+                    "api",
+                    "agents",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "bbd5c3b1-3a67-4aa3-be73-20dc315f4dba"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 20 Oct 2026 02:36:51 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": {\n        \"id\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n        \"fullName\": \"Aiman Afiq bin Esam\",\n        \"department\": \"Technical\",\n        \"email\": \"aimanafiqbinesam@mail.com\",\n        \"active\": true,\n        \"tickets\": [\n            {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"InProgress\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"done bitch\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": [\n                    {\n                        \"id\": \"10d30a9c-5e4a-4fdd-a4d7-7347589087ac\",\n                        \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                        \"body\": \"Dapat ke status something happen?\",\n                        \"visibility\": \"Internal\",\n                        \"createdDate\": \"2026-10-18T22:57:58.484895+08:00\"\n                    },\n                    {\n                        \"id\": \"0736a56a-ed4f-4826-97ae-d2fc0f5c402e\",\n                        \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                        \"body\": \"Dapat ke status something happen?\",\n                        \"visibility\": \"Internal\",\n                        \"createdDate\": \"2026-10-18T23:02:42.494451+08:00\"\n                    },\n                    {\n                        \"id\": \"9f601190-d9ce-48c6-81b2-adb2dbdf18fc\",\n                        \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                        \"body\": \"Dapat ke status something happen?\",\n                        \"visibility\": \"Internal\",\n                        \"createdDate\": \"2026-10-18T23:15:04.144174+08:00\"\n                    }\n                ]\n            }\n        ],\n        \"user\": {\n            \"accountNonExpired\": true,\n            \"accountNonLocked\": true,\n            \"authorities\": [\n                {\n                    \"authority\": \"ROLE_Agent\"\n                }\n            ],\n            \"createdDate\": \"2026-10-17T06:49:41.288725+08:00\",\n            \"credentialsNonExpired\": true,\n            \"email\": \"testuser@example.com\",\n            \"enabled\": true,\n            \"id\": \"985b5d79-e0ed-43b4-aca7-9bdb63e222f9\",\n            \"password\": \"$2a$10$W4CMMpQ.KW1R6KE7y0ZKVOeahj.Fpc4o0XIUpyXKC/7wu.37oShlS\",\n            \"passwordHash\": \"$2a$10$W4CMMpQ.KW1R6KE7y0ZKVOeahj.Fpc4o0XIUpyXKC/7wu.37oShlS\",\n            \"role\": \"Agent\",\n            \"username\": \"testuser@example.com\"\n        }\n    },\n    \"description\": \"Got Agent\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Register as agent",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{localhost}}/api/agents",
+              "host": [
+                "{{localhost}}"
+              ],
+              "path": [
+                "api",
+                "agents"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "active / deactive agent",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{localhost}}/api/agents/:id/active",
+              "host": [
+                "{{localhost}}"
+              ],
+              "path": [
+                "api",
+                "agents",
+                ":id",
+                "active"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "bbd5c3b1-3a67-4aa3-be73-20dc315f4dba"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "deactive agent failed",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{localhost}}/api/agents/:id/active",
+                  "host": [
+                    "{{localhost}}"
+                  ],
+                  "path": [
+                    "api",
+                    "agents",
+                    ":id",
+                    "active"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "bbd5c3b1-3a67-4aa3-be73-20dc315f4dba"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "1275"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 20 Oct 2026 02:37:41 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Ticket Error\",\n    \"description\": \"Cannot deactivate agent because they have active tickets assigned.\",\n    \"customObject\": [\n        {\n            \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n            \"title\": \"Seems there is an issue with the dashboard\",\n            \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n            \"customerName\": \"ahmad\",\n            \"customerEmail\": \"ahmad@gmail.com\",\n            \"priority\": \"Low\",\n            \"ticketStatus\": \"InProgress\",\n            \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n            \"reference\": \"TCK-2026-0002\",\n            \"resolutionSummary\": \"done bitch\",\n            \"reopenCount\": 1,\n            \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n            \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n            \"comments\": [\n                {\n                    \"id\": \"10d30a9c-5e4a-4fdd-a4d7-7347589087ac\",\n                    \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                    \"body\": \"Dapat ke status something happen?\",\n                    \"visibility\": \"Internal\",\n                    \"createdDate\": \"2026-10-18T22:57:58.484895+08:00\"\n                },\n                {\n                    \"id\": \"0736a56a-ed4f-4826-97ae-d2fc0f5c402e\",\n                    \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                    \"body\": \"Dapat ke status something happen?\",\n                    \"visibility\": \"Internal\",\n                    \"createdDate\": \"2026-10-18T23:02:42.494451+08:00\"\n                },\n                {\n                    \"id\": \"9f601190-d9ce-48c6-81b2-adb2dbdf18fc\",\n                    \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                    \"body\": \"Dapat ke status something happen?\",\n                    \"visibility\": \"Internal\",\n                    \"createdDate\": \"2026-10-18T23:15:04.144174+08:00\"\n                }\n            ]\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update agent info",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"fullName\" : \"Aiman Afiq bin Esam\",\n    \"department\": \"Technical\",\n    \"email\": \"aimanafiqbinesam@mail.com\",\n    \"active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localhost}}/api/agents/:id",
+              "host": [
+                "{{localhost}}"
+              ],
+              "path": [
+                "api",
+                "agents",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "bbd5c3b1-3a67-4aa3-be73-20dc315f4dba"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Update agent info",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"fullName\" : \"Aiman Afiq bin Esam\",\n    \"department\": \"Technical\",\n    \"email\": \"aimanafiqbinesam@mail.com\",\n    \"active\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localhost}}/api/agents/:id",
+                  "host": [
+                    "{{localhost}}"
+                  ],
+                  "path": [
+                    "api",
+                    "agents",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "bbd5c3b1-3a67-4aa3-be73-20dc315f4dba"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 20 Oct 2026 02:36:07 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": {\n        \"id\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n        \"fullName\": \"Aiman Afiq bin Esam\",\n        \"department\": \"Technical\",\n        \"email\": \"aimanafiqbinesam@mail.com\",\n        \"active\": true,\n        \"tickets\": [\n            {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"InProgress\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"done bitch\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": [\n                    {\n                        \"id\": \"10d30a9c-5e4a-4fdd-a4d7-7347589087ac\",\n                        \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                        \"body\": \"Dapat ke status something happen?\",\n                        \"visibility\": \"Internal\",\n                        \"createdDate\": \"2026-10-18T22:57:58.484895+08:00\"\n                    },\n                    {\n                        \"id\": \"0736a56a-ed4f-4826-97ae-d2fc0f5c402e\",\n                        \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                        \"body\": \"Dapat ke status something happen?\",\n                        \"visibility\": \"Internal\",\n                        \"createdDate\": \"2026-10-18T23:02:42.494451+08:00\"\n                    },\n                    {\n                        \"id\": \"9f601190-d9ce-48c6-81b2-adb2dbdf18fc\",\n                        \"authorName\": \"aimanafiqbinesam@gmail.com\",\n                        \"body\": \"Dapat ke status something happen?\",\n                        \"visibility\": \"Internal\",\n                        \"createdDate\": \"2026-10-18T23:15:04.144174+08:00\"\n                    }\n                ]\n            }\n        ],\n        \"user\": {\n            \"accountNonExpired\": true,\n            \"accountNonLocked\": true,\n            \"authorities\": [\n                {\n                    \"authority\": \"ROLE_Agent\"\n                }\n            ],\n            \"createdDate\": \"2026-10-17T06:49:41.288725+08:00\",\n            \"credentialsNonExpired\": true,\n            \"email\": \"testuser@example.com\",\n            \"enabled\": true,\n            \"id\": \"985b5d79-e0ed-43b4-aca7-9bdb63e222f9\",\n            \"password\": \"$2a$10$W4CMMpQ.KW1R6KE7y0ZKVOeahj.Fpc4o0XIUpyXKC/7wu.37oShlS\",\n            \"passwordHash\": \"$2a$10$W4CMMpQ.KW1R6KE7y0ZKVOeahj.Fpc4o0XIUpyXKC/7wu.37oShlS\",\n            \"role\": \"Agent\",\n            \"username\": \"testuser@example.com\"\n        }\n    },\n    \"description\": \"Agent updated\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Comment",
+      "item": [
+        {
+          "name": "Create Comment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"body\": \"Hi Aiman Afiq, you dah buat ke this part? seems like we need to settle it within this week\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localhost}}/api/tickets/:id/comments",
+              "host": [
+                "{{localhost}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                ":id",
+                "comments"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "413c9d92-1fe4-4bdc-883a-f1885e22cc12"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Create Comment",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"body\": \"Hi Aiman Afiq, you dah buat ke this part? seems like we need to settle it within this week\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localhost}}/api/tickets/:id/comments",
+                  "host": [
+                    "{{localhost}}"
+                  ],
+                  "path": [
+                    "api",
+                    "tickets",
+                    ":id",
+                    "comments"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "413c9d92-1fe4-4bdc-883a-f1885e22cc12"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 20 Oct 2026 02:46:46 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": {\n        \"id\": \"83650f67-cfa7-46dc-8fd2-eb8b3bd0eaf5\",\n        \"authorName\": \"aimanafiqbinesam@gmail.com\",\n        \"body\": \"Hi Aiman Afiq, you dah buat ke this part? seems like we need to settle it within this week\",\n        \"visibility\": \"Internal\",\n        \"createdDate\": \"2026-10-20T10:46:46.683715798+08:00\"\n    },\n    \"description\": \"Comment added to the ticket\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get All Comments",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{localhost}}/api/comments",
+              "host": [
+                "{{localhost}}"
+              ],
+              "path": [
+                "api",
+                "comments"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Ticket History",
+      "item": [
+        {
+          "name": "Get All Ticket Histories",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{localhost}}/api/tickets/:id/history",
+              "host": [
+                "{{localhost}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                ":id",
+                "history"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "413c9d92-1fe4-4bdc-883a-f1885e22cc12"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get All Ticket Histories",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{localhost}}/api/tickets/:id/history",
+                  "host": [
+                    "{{localhost}}"
+                  ],
+                  "path": [
+                    "api",
+                    "tickets",
+                    ":id",
+                    "history"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "413c9d92-1fe4-4bdc-883a-f1885e22cc12"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 20 Oct 2026 02:54:45 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": [\n        {\n            \"id\": \"053cf43a-1c4a-4662-90d9-e0db605cd69b\",\n            \"action\": \"Updated\",\n            \"timestamp\": \"2026-10-20T10:44:49.507729+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"4b86da62-c1c0-41fa-ad5e-f564679a8fd2\",\n            \"action\": \"Assigned\",\n            \"timestamp\": \"2026-10-20T10:40:42.351441+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"773c297f-739e-447e-a068-ae0b61d4c450\",\n            \"action\": \"Updated\",\n            \"timestamp\": \"2026-10-20T10:40:42.343917+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"4a9c2618-3d3b-4edf-a461-bb519699335e\",\n            \"action\": \"Updated\",\n            \"timestamp\": \"2026-10-20T10:30:02.079653+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"8d395a27-7ed0-48ff-972f-9375fa68e7b9\",\n            \"action\": \"Updated\",\n            \"timestamp\": \"2026-10-19T00:20:00.898686+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"fa13f338-e094-4f80-b14d-69ed6ef99610\",\n            \"action\": \"Updated\",\n            \"timestamp\": \"2026-10-19T00:00:21.900478+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"0d74f8d7-1519-42da-ae14-aee1bba0d0b3\",\n            \"action\": \"Updated\",\n            \"timestamp\": \"2026-10-18T23:59:27.250176+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"844bf36d-5933-4773-a002-ec2551717ea5\",\n            \"action\": \"Assigned\",\n            \"timestamp\": \"2026-10-18T23:53:10.216977+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"72acffbd-db93-4f50-a402-6d5c70b7ddbd\",\n            \"action\": \"Updated\",\n            \"timestamp\": \"2026-10-18T23:53:10.17522+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"6ca0fa0b-3eb2-4972-b165-20f448be0d45\",\n            \"action\": \"Assigned\",\n            \"timestamp\": \"2026-10-18T23:37:18.761836+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"41dad52f-0fd2-4c31-bb3c-dc3dfab1869d\",\n            \"action\": \"Updated\",\n            \"timestamp\": \"2026-10-18T23:37:18.720487+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"e3c92c33-a418-48f1-9e21-fa0ec9f28040\",\n            \"action\": \"Assigned\",\n            \"timestamp\": \"2026-10-18T23:35:40.915533+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"855c1f91-f0c2-415a-9c94-48a60e2d5a27\",\n            \"action\": \"Updated\",\n            \"timestamp\": \"2026-10-18T23:35:40.874418+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"5d945ce0-ed34-4fb4-a89a-7f0daea6e199\",\n            \"action\": \"Assigned\",\n            \"timestamp\": \"2026-10-18T23:33:35.873748+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"3c991d5d-da70-4c12-a3c6-e0783709040d\",\n            \"action\": \"Updated\",\n            \"timestamp\": \"2026-10-18T23:33:35.839877+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"4229ca05-c05f-463a-8b7b-ffbe004f15b8\",\n            \"action\": \"Updated\",\n            \"timestamp\": \"2026-10-18T23:31:14.612329+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"1f22081d-bc92-42b5-91b9-d8405d512975\",\n            \"action\": \"Updated\",\n            \"timestamp\": \"2026-10-18T23:27:23.972661+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"4982d6a3-4814-40e7-b4e2-254f5c055131\",\n            \"action\": \"Updated\",\n            \"timestamp\": \"2026-10-18T23:25:27.112124+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"e8066344-4edf-403a-91af-fa4818556208\",\n            \"action\": \"Updated\",\n            \"timestamp\": \"2026-10-18T23:18:53.031382+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"62bb2a0b-433a-41e9-8db9-aae3e891f6fd\",\n            \"action\": \"Updated\",\n            \"timestamp\": \"2026-10-18T22:50:49.527963+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"f008d955-f76d-4877-b375-e072aa0861d3\",\n            \"action\": \"Updated\",\n            \"timestamp\": \"2026-10-18T22:49:51.505276+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"a0167d46-5aba-4bca-a085-37a222013df3\",\n            \"action\": \"Assigned\",\n            \"timestamp\": \"2026-10-18T21:58:17.867344+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"2a8a74d9-3c38-4f87-84d3-baab4e5b88a4\",\n            \"action\": \"Updated\",\n            \"timestamp\": \"2026-10-18T21:58:17.811871+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        },\n        {\n            \"id\": \"5d94d2b0-6bf8-4794-9ba7-9ce7adc1dcb1\",\n            \"action\": \"Created\",\n            \"timestamp\": \"2026-10-18T21:39:42.318953+08:00\",\n            \"ticket\": {\n                \"id\": \"413c9d92-1fe4-4bdc-883a-f1885e22cc12\",\n                \"title\": \"Seems there is an issue with the dashboard\",\n                \"description\": \"The dashboard seems like it has issue with the graphs, maybe the value is wrong?\",\n                \"customerName\": \"ahmad\",\n                \"customerEmail\": \"ahmad@gmail.com\",\n                \"priority\": \"Low\",\n                \"ticketStatus\": \"Resolved\",\n                \"assignedAgent\": \"bbd5c3b1-3a67-4aa3-be73-20dc315f4dba\",\n                \"reference\": \"TCK-2026-0002\",\n                \"resolutionSummary\": \"Done fix can't login. seems like the user input somehow got like null exception\",\n                \"reopenCount\": 1,\n                \"createdDate\": \"2026-10-18T21:39:42.264227+08:00\",\n                \"dueDate\": \"2026-10-25T21:39:42.264227+08:00\",\n                \"comments\": null\n            }\n        }\n    ],\n    \"description\": \"got all ticket histories\"\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "localhost",
+      "value": ""
+    }
+  ]
+}
